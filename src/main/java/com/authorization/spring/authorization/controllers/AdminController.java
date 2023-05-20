@@ -10,6 +10,10 @@ public class AdminController {
     public String get(){
         return "GET:: admin controller";
     }
+    @GetMapping("/show")
+    public String geti(){
+        return "prueba";
+    }
     @PostMapping("/post")
     public String post(){
         return "POST:: admin controller";

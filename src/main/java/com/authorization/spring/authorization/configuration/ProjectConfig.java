@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -47,18 +48,20 @@ public class ProjectConfig {
 
                 .requestMatchers("/api/v1/admin/**").hasRole(ADMIN.name())
 
-                .requestMatchers(GET,"/api/v1/admin/**").hasAuthority(ADMIN_READ.name())
-                .requestMatchers(POST,"/api/v1/admin/**").hasAuthority(ADMIN_CREATE.name())
-                .requestMatchers(PUT,"/api/v1/admin/**").hasAuthority(ADMIN_UPDATE.name())
+
+                .requestMatchers(POST,"/api/v1/admin/**").hasAuthority(ADMIN_READ.name())
+                .requestMatchers(PUT,"/api/v1/admin/**").hasAuthority(ADMIN_READ.name())
                 .requestMatchers(DELETE,"/api/v1/admin/**").hasAuthority(ADMIN_DELETE.name())
+                .requestMatchers(GET,"/api/v1/admin/**").hasAuthority(ADMIN_READ.name())
 
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/home").
                 permitAll()
-                .and().formLogin()
+                .and().httpBasic(Customizer.withDefaults())
 
-                .and()
+
+
                 .build();
     }
 
